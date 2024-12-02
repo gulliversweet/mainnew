@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini-App</title>
+    <script>
+        // Получение кода языка из параметра URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const languageCode = urlParams.get('language_code') || 'en'; // По умолчанию английский
+
+        // Установка изображения в зависимости от языка
+        window.onload = function() {
+            const img = document.getElementById('languageImage');
+            if (languageCode === 'ru') {
+                img.src = './images/russian_image.jpg'; // Изображение для русского языка
+                img.alt = 'Хеллоу мир, Манера крутит мир!';
+            } else {
+                img.src = './images/english_image.jpg'; // Изображение для английского языка
+                img.alt = 'Hello, World!';
+            }
+        };
+    </script>
+</head>
+<body>
+    <h1>Mini-App</h1>
+    <img id="languageImage" src="" alt="Loading image..." style="max-width: 100%; height: auto;">
+</body>
+</html>
+
+
