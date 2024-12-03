@@ -4,28 +4,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mini-App</title>
-    <script>
-        // Получение кода языка из параметра URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const languageCode = urlParams.get('language_code') || 'en'; // По умолчанию английский
-
-        // Установка изображения в зависимости от языка
-        window.onload = function() {
-            const img = document.getElementById('languageImage');
-            if (languageCode === 'ru') {
-                img.src = './images/russian_image.jpg'; // Изображение для русского языка
-                img.alt = 'Хеллоу мир, Манера крутит мир!';
-            } else {
-                img.src = './images/english_image.jpg'; // Изображение для английского языка
-                img.alt = 'Hello, World!';
-            }
-        };
-    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .hidden {
+            display: none;
+        }
+        .form-field {
+            margin-bottom: 10px;
+        }
+        input {
+            padding: 8px;
+            width: 200px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Mini-App</h1>
-    <img id="languageImage" src="" alt="Loading image..." style="max-width: 100%; height: auto;">
+    <!-- Главный экран -->
+    <div id="mainScreen">
+        <h1>Mini-App</h1>
+        <button id="createButton">Создать</button>
+    </div>
+
+    <!-- Экран с полями ввода -->
+    <div id="formScreen" class="hidden">
+        <h1>Введите данные</h1>
+        <div class="form-field">
+            <label for="miniApp">Mini-app:</label>
+            <input type="text" id="miniApp">
+        </div>
+        <div class="form-field">
+            <label for="mau">MAU:</label>
+            <input type="text" id="mau">
+        </div>
+        <div class="form-field">
+            <label for="cost">Cost:</label>
+            <input type="text" id="cost">
+        </div>
+        <button id="startButton" disabled>Старт</button>
+    </div>
+
+    <script>
+        // Элементы интерфейса
+        const mainScreen = document.getElementById('mainScreen');
+        const formScreen = document.getElementById('formScreen');
+        const createButton = document.getElementById('createButton');
+        const startButton = document.getElementById('startButton');
+        const inputs = document.querySelectorAll('#formScreen input');
+
+        // Логика перехода на экран ввода данных
+        createButton.addEventListener('click', () => {
+            mainScreen.classList.add('hidden');
+            formScreen.classList.remove('hidden');
+        });
+
+        // Логика активации кнопки "Старт"
+        inputs.forEach(input => {
+            input.addEventListener('input', () => {
+                // Проверяем, что все поля заполнены
+                const allFilled = Array.from(inputs).every(i => i.value.trim().length > 0);
+                startButton.disabled = !allFilled;
+            });
+        });
+
+        // Логика возврата на главный экран
+        startButton.addEventListener('click', () => {
+            mainScreen.classList.remove('hidden');
+            formScreen.classList.add('hidden');
+            // Очистка полей
+            inputs.forEach(input => input.value = '');
+            startButton.disabled = true;
+        });
+    </script>
 </body>
 </html>
-
-
