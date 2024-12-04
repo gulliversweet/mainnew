@@ -75,11 +75,42 @@
             });
         });
 
-        // Логика возврата на главный экран
+        // Логика отправки данных на сервер через Netlify Function
         startButton.addEventListener('click', () => {
+    const data = {
+        miniApp: document.getElementById('miniApp').value.trim(),
+        mau: document.getElementById('mau').value.trim(),
+        cost: document.getElementById('cost').value.trim(),
+        timestamp: new Date().toISOString()
+    };
+
+    // Отправка данных на серверную функцию Netlify
+    fetch('/.netlify/functions/save-data', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    }).then(response => {
+        if (response.ok) {
+            console.log('Данные успешно отправлены');
+        } else {
+            console.error('Ошибка при отправке данных:', response.statusText);
+        }
+    }).catch(error => {
+        console.error('Ошибка сети:', error);
+        alert('Ошибка сети! Пожалуйста, проверьте ваше соединение или сервер.');
+    });
+
+    // Возвращаемся на главный экран
+    mainScreen.classList.remove('hidden');
+    formScreen.classList.add('hidden');
+    inputs.forEach(input => input.value = '');
+    startButton.disabled = true;
+});
+
+
+            // Возвращаемся на главный экран
             mainScreen.classList.remove('hidden');
             formScreen.classList.add('hidden');
-            // Очистка полей
             inputs.forEach(input => input.value = '');
             startButton.disabled = true;
         });
