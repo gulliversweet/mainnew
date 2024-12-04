@@ -11,7 +11,7 @@ app.use(bodyParser.json()); // Настройка body-parser
 
 // Настройка CORS (вставляем после создания объекта app)
 app.use(cors({
-    origin: 'https://aquamarine-centaur-3cd890.netlify.app' // Ваш Netlify-домен
+    origin: 'https://tourmaline-youtiao-8771be.netlify.app' // Ваш Netlify-домен
 }));
 
 // Telegram: команда /start
@@ -20,7 +20,7 @@ bot.onText(/\/start/, (msg) => {
     const username = msg.from.username || 'unknown';
     const userId = msg.from.id;
 
-    const appUrl = 'https://aquamarine-centaur-3cd890.netlify.app'; // Netlify-домен
+    const appUrl = 'https://tourmaline-youtiao-8771be.netlify.app'; // Netlify-домен
 
     const options = {
         reply_markup: {
